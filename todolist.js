@@ -1,38 +1,34 @@
 const todoList = [];
 
-function addTodo() {
-    const inputElement = document.querySelector('.js-name-input1');
-    const name = inputElement.value;
-    todoList.push(name);
-    console.log(todoList);
-    inputElement.value = '';
-}
-
 function addTodoPage() {
-    const inputElement2 = document.querySelector('.js-name-input2');
-    const name = inputElement2.value;
+    const inputElement1 = document.querySelector('.js-name-input1');
+    const dateElement = document.querySelector('.js-date');
+    const name = inputElement1.value;
+    const dueDate = dateElement.value;
     if (name) {
-        todoList.push(name);
+        todoList.push({name, dueDate});
     }
-    inputElement2.value = '';
+    inputElement1.value = '';
+    dateElement.value = '';
     showOnPage();
 }
 
 
 function showOnPage() {
     let todoListHTML = '';
-    console.log(todoList);
     for(index = 0; index < todoList.length; index++) {
-        const todo = todoList[index];
+        const todoObject = todoList[index];
+        const name = todoObject.name;
+        const dueDate = todoObject.dueDate; 
         todoListHTML += `
-            <p>${todo}
-                <button onclick="
-                    todoList.splice(${index},1);
-                    showOnPage();
-                    ">Delete</button>
-            </p>`;
+            <div class="output-name">
+                ${name}
+            </div>
+            <div class="output-date">
+                ${dueDate}
+            </div>
+            <button onclick="todoList.splice(${index},1);showOnPage();" class="delete-todo-button">Delete</button>`;
     }
-    console.log(todoListHTML);
 
     document.querySelector('.js-todo-result').innerHTML = todoListHTML;
 }
